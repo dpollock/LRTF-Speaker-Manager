@@ -1,0 +1,127 @@
+﻿@model LRTFSpeakers.Web.Models.Presentation
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Presentation</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EntryID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.EntryID, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.EntryID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Track, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Track, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Track, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TopicTitle, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TopicTitle, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TopicTitle, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.TopicDescription, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div id="toolbar" style="display: none;">
+                    <a data-wysihtml5-command="bold">bold</a>
+                    <a data-wysihtml5-command="italic">italic</a>
+
+                    <!-- Some wysihtml5 commands require extra parameters -->
+                    <a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="red">red</a>
+                    <a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="green">green</a>
+                    <a data-wysihtml5-command="foreColor" data-wysihtml5-command-value="blue">blue</a>
+
+                    <!-- Some wysihtml5 commands like 'createLink' require extra paramaters specified by the user (eg. href) -->
+                    <a data-wysihtml5-command="createLink">insert link</a>
+                    <div data-wysihtml5-dialog="createLink" style="display: none;">
+                        <label>
+                            Link:
+                            <input data-wysihtml5-dialog-field="href" value="http://" class="text">
+                        </label>
+                        <a data-wysihtml5-dialog-action="save">OK</a> <a data-wysihtml5-dialog-action="cancel">Cancel</a>
+                    </div>
+                </div>
+                @Html.EditorFor(model => model.TopicDescription, new { htmlAttributes = new { @class = "form-control", cols = 50, rows = 10 } })
+                @Html.ValidationMessageFor(model => model.TopicDescription, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CreatedOn, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CreatedOn, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CreatedOn, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Room, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Room, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Room, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SessionNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.SessionNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SessionNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.Status, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/simple.js"></script>
+    <script src="~/Scripts/wysihtml5-0.3.0.min.js"></script>
+
+    <script>
+        var editor = new wysihtml5.Editor("TopicDescription", { // id of textarea element
+            toolbar: "toolbar", // id of toolbar element
+            parserRules: wysihtml5ParserRules // defined in parser rules set
+        });
+    </script>
+}

@@ -1,0 +1,90 @@
+﻿@model LRTFSpeakers.Web.Models.Presentation
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Presentation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EntryID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EntryID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MainSpeaker.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MainSpeaker.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MainSpeaker.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Track)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TopicTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TopicTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TopicDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TopicDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Room)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Room)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SessionNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SessionNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

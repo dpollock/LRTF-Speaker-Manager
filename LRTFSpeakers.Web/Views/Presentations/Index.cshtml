@@ -1,0 +1,119 @@
+﻿@model IEnumerable<LRTFSpeakers.Web.Models.Presentation>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Status
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EntryID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MainSpeaker.FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Track)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TopicTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Room)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SessionNumber)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Status
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu changeStatus" aria-labelledby="dropdownMenu1">
+                        <li><a data-id="@item.Id" data-status="0" href="#">Submitted</a></li>
+                        <li><a data-id="@item.Id" data-status="1" href="#">Accepted</a></li>
+                        <li><a data-id="@item.Id" data-status="2" href="#">Rejected</a></li>
+                        <li><a data-id="@item.Id" data-status="3" href="#">Backup</a></li>
+                        <li><a data-id="@item.Id" data-status="4" href="#">Awaiting Acceptance</a></li>
+                    </ul>
+                </div>
+            </td>
+            <td>
+                <span id="@item.Id">@item.Status</span>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EntryID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MainSpeaker.FullName)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Track)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TopicTitle)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Room)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SessionNumber)
+            </td>
+
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section scripts{
+
+    <script>
+        $('.changeStatus > li > a').click(function () {
+            event.preventDefault();
+            var that = $(this);
+            $.ajax({
+                method: "POST",
+                url: "@Url.Action("UpdateStatus")",
+                data: { id: that.data('id'), statusId: that.data('status') }
+            })
+              .done(function (msg) {
+                  $('#' + that.data('id')).html(msg);
+              });
+
+        });
+
+    </script>
+
+}

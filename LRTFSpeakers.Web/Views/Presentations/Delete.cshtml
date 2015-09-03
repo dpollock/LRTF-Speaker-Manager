@@ -1,0 +1,88 @@
+﻿@model LRTFSpeakers.Web.Models.Presentation
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Presentation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EntryID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EntryID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Track)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Track)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TopicTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TopicTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TopicDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TopicDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Room)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Room)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SessionNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SessionNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
