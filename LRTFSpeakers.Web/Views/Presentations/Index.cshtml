@@ -9,7 +9,7 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table table-striped">
     <tr>
         <th>
             Status
@@ -57,6 +57,7 @@
                         <li><a data-id="@item.Id" data-status="2" href="#">Rejected</a></li>
                         <li><a data-id="@item.Id" data-status="3" href="#">Backup</a></li>
                         <li><a data-id="@item.Id" data-status="4" href="#">Awaiting Acceptance</a></li>
+                        <li><a data-id="@item.Id" data-status="5" href="#">Speaker Declined</a></li>
                     </ul>
                 </div>
             </td>

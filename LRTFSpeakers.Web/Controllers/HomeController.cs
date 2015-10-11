@@ -16,6 +16,18 @@ namespace LRTFSpeakers.Web.Controllers
 {
     public class HomeController : Controller
     {
+        public ActionResult Test()
+        {
+            return View();
+        }
+
+        public JsonResult GetPresStat()
+        {
+            var pres = db.Presentations.GroupBy(x => x.Track).ToList();
+            var result = pres.Select(x => new { track = x.Key, count = x.Count() });
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
         SpeakerContext db = new SpeakerContext();
         public ActionResult Index()
         {
@@ -63,9 +75,29 @@ namespace LRTFSpeakers.Web.Controllers
 
         }
 
+        public ActionResult GetEmails()
+        {
+            var emails= db.Presentations.Where(x => x.Status == Status.Accepted || x.Status == Status.AwaitingAccepted)
+                .Select(x => x.MainSpeaker)
+                .ToList()
+                .Select(x => x.FullName + " &lt;" + x.Email + "&gt;");
+
+            return Content(string.Join("<br/>", emails));
+        }
+
+        public ActionResult GetSpeakerDump()
+        {
+            var emails = db.Presentations.Where(x => x.Status == Status.Accepted || x.Status == Status.AwaitingAccepted)
+                .Select(x => x.MainSpeaker)
+                .ToList()
+                .Select(x => $"{x.FirstName},{x.LastName},{x.Email},{x.Company},{x.Twitter}");
+
+            return Content(string.Join("<br/>", emails));
+        }
+
         public ActionResult GetPresentationStats(string groupby, bool? filter)
         {
-            var data = db.Presentations.Include("MainSpeaker").ToList();
+            var data = db.Presentations.Include("MainSpeaker").Where(x=>x.IsPrimaryPres).ToList();
             IEnumerable<IGrouping<string, Presentation>> result = data.GroupBy(d => d.Status.ToString());
             switch (groupby)
             {

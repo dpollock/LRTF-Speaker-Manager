@@ -58,6 +58,8 @@ namespace LRTFSpeakers.Web.Models
         public int? SessionNumber { get; set; }
 
         public Status Status { get; set; }
+
+        public bool IsPrimaryPres { get; set; }
     }
 
     public enum Status
@@ -67,6 +69,7 @@ namespace LRTFSpeakers.Web.Models
         Rejected,
         Backup,
         AwaitingAccepted,
+        SpeakerDeclined
     }
 
     public class SpeakerData

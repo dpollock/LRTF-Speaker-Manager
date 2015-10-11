@@ -41,11 +41,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Humanizer, Version=1.37.7.0, Culture=neutral, PublicKeyToken=979442b78dfc278e, processorArchitecture=MSIL">
@@ -180,6 +180,10 @@
     <Compile Include="Migrations\201509021333438_speakernotes.Designer.cs">
       <DependentUpon>201509021333438_speakernotes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201509231818337_MarkPresAsPrimary.cs" />
+    <Compile Include="Migrations\201509231818337_MarkPresAsPrimary.Designer.cs">
+      <DependentUpon>201509231818337_MarkPresAsPrimary.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SpeakerContext.cs" />
     <Compile Include="Models\SpeakerData.cs" />
@@ -233,6 +237,7 @@
     <Content Include="Views\Speakers\Details.cshtml" />
     <Content Include="Views\Speakers\Edit.cshtml" />
     <Content Include="Views\Speakers\Index.cshtml" />
+    <Content Include="Views\Home\Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -265,6 +270,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201509021333438_speakernotes.resx">
       <DependentUpon>201509021333438_speakernotes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509231818337_MarkPresAsPrimary.resx">
+      <DependentUpon>201509231818337_MarkPresAsPrimary.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -17,7 +17,7 @@ namespace LRTFSpeakers.Web.Controllers
         // GET: Presentations
         public ActionResult Index()
         {
-            return View(db.Presentations.ToList());
+            return View(db.Presentations.OrderBy(x=>x.Status).ToList());
         }
 
         // GET: Presentations/Details/5
@@ -46,7 +46,7 @@ namespace LRTFSpeakers.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,EntryID,Track,TopicTitle,TopicDescription,CreatedOn,Room,SessionNumber,Status")] Presentation presentation)
+        public ActionResult Create([Bind(Include = "Id,EntryID,Track,TopicTitle,TopicDescription,CreatedOn,Room,SessionNumber,Status,IsPrimaryPres")] Presentation presentation)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace LRTFSpeakers.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,EntryID,Track,TopicTitle,TopicDescription,CreatedOn,Room,SessionNumber,Status")] Presentation presentation)
+        public ActionResult Edit([Bind(Include = "Id,EntryID,Track,TopicTitle,TopicDescription,CreatedOn,Room,SessionNumber,Status,IsPrimaryPres")] Presentation presentation)
         {
             if (ModelState.IsValid)
             {
@@ -127,7 +127,7 @@ namespace LRTFSpeakers.Web.Controllers
         public ActionResult UpdateStatus(int id, int statusid)
         {
             var pres = db.Presentations.Find(id);
-            pres.Status = (Status) statusid;
+            pres.Status = (Status)statusid;
             db.SaveChanges();
 
             return Content($"{pres.Status}");
