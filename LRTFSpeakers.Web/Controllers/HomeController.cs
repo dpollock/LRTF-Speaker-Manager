@@ -144,6 +144,9 @@ namespace LRTFSpeakers.Web.Controllers
                     //Edit = Url.Action("Edit", "Presentations", new { id = p.Id }, Request.Url.Scheme),
                     p.Id,
                     p.Track,
+                    p.Day,
+                    p.Room,
+                    p.SessionNumber,
                     Topic = p.TopicTitle,
                     Description = p.TopicDescription
                 })
