@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LRTFSpeakers.Web.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace LRTFSpeakers.Web.Controllers
 {
@@ -17,7 +19,7 @@ namespace LRTFSpeakers.Web.Controllers
         // GET: Presentations
         public ActionResult Index()
         {
-            return View(db.Presentations.OrderBy(x=>x.Status).ToList());
+            return View(db.Presentations.OrderBy(x => x.Status).ToList());
         }
 
         // GET: Presentations/Details/5
@@ -132,5 +134,96 @@ namespace LRTFSpeakers.Web.Controllers
 
             return Content($"{pres.Status}");
         }
+
+        [HttpGet]
+        public ActionResult Upload()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Upload(string jsonfile)
+        {
+            if (string.IsNullOrEmpty(jsonfile))
+            {
+                return View();
+            }
+
+            var convertedData = JsonConvert.DeserializeObject<List<PaperCallIOFormat>>(jsonfile);
+            foreach (var pres in convertedData)
+            {
+                var existingSpeaker = db.Speakers.Include(x=>x.Presentations).FirstOrDefault(x => x.Email == pres.email);
+                if (existingSpeaker == null)
+                {
+                    existingSpeaker = new Speaker
+                    {
+                        Email = pres.email,
+                        AttendingSpeakerDinner = false,
+                        Bio = pres.bio,
+                        Company = pres.organization,
+                        Twitter = pres.twitter,
+                        Website = pres.url,
+                        Notes = pres.notes,
+                        Presentations = new List<Presentation>()
+                    };
+
+                    var name = pres.name.Split(' ');
+                    if (name.Length == 2)
+                    {
+                        existingSpeaker.FirstName = name[0];
+                        existingSpeaker.LastName = name[1];
+                    }
+                    else
+                    {
+                        existingSpeaker.FirstName = pres.name;
+                    }
+
+                    var location = pres.location.Split(',');
+                    if (location.Length == 2)
+                    {
+                        existingSpeaker.City = location[0];
+                        existingSpeaker.State = location[1];
+                    }
+
+                    db.Speakers.Add(existingSpeaker);
+                }
+                else
+                {
+                    if (existingSpeaker.FullName.ToLower() != pres.name.ToLower())
+                    {
+                        //different speaker...show error maybe?
+                    }
+                    else
+                    {
+                        existingSpeaker.Bio = pres.bio;
+                        existingSpeaker.Company = pres.organization;
+                        existingSpeaker.Twitter = pres.twitter;
+                        existingSpeaker.Website = pres.url;
+                        existingSpeaker.Notes = pres.notes;
+                    }
+                }
+
+                var existingPres = existingSpeaker.Presentations.FirstOrDefault(x => x.TopicTitle == pres.title);
+                if (existingPres == null)
+                {
+                    existingPres = new Presentation();
+                    existingSpeaker.Presentations.Add(existingPres);
+                }
+
+                existingPres.TopicTitle = pres.title;
+                existingPres.TopicDescription = pres.description;
+                existingPres.CreatedOn = DateTime.Now;
+                existingPres.IsPrimaryPres = existingSpeaker.Presentations.Count() == 1;
+                existingPres.MainSpeaker = existingSpeaker;
+                existingPres.Status = Status.Accepted;
+
+            }
+
+            db.SaveChanges();
+
+            TempData["message"] = "File Imported";
+            return RedirectToAction("Index");
+        }
+
     }
 }
