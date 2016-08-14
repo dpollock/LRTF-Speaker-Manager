@@ -1,13 +1,14 @@
 ﻿@model IEnumerable<LRTFSpeakers.Web.Models.Presentation>
 
 @{
-    ViewBag.Title = "Presenations";
+    ViewBag.Title = "Presentations";
 }
 
-<h2>Presenations</h2>
+<h2>Presentations</h2>
 
 <p>
-   @Html.ActionLink("Upload Papercall JSON", "Upload")
+   @Html.ActionLink("Upload JSON", "Upload", null, new {@class="btn btn-danger"})
+   @Html.ActionLink("Generate Speaker.json", "GetSpeakerJson", "Home", null, new {@class="btn btn-primary"})
 </p>
 <table class="table table-striped">
     <tr>
@@ -18,7 +19,7 @@
             @Html.DisplayNameFor(model => model.Status)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.EntryID)
+            @Html.DisplayNameFor(model => model.Id)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.MainSpeaker.FullName)
@@ -68,7 +69,7 @@
                 <span id="@item.Id">@item.Status</span>
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EntryID)
+                @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.MainSpeaker.FullName)

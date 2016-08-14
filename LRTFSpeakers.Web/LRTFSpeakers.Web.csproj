@@ -189,6 +189,7 @@
       <DependentUpon>201608140310362_AddDayField.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\PaperCallIOFormat.cs" />
     <Compile Include="Models\SpeakerContext.cs" />
     <Compile Include="Models\SpeakerData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
