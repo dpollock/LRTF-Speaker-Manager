@@ -54,6 +54,7 @@ namespace LRTFSpeakers.Web.Models
         public string TopicDescription { get; set; }
         public DateTime CreatedOn { get; set; }
 
+        public int? Day { get; set; }
         public string Room { get; set; }
         public int? SessionNumber { get; set; }
 
