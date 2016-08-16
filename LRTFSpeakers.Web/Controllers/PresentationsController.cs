@@ -208,11 +208,12 @@ namespace LRTFSpeakers.Web.Controllers
                 {
                     existingPres = new Presentation();
                     existingSpeaker.Presentations.Add(existingPres);
+                    existingPres.CreatedOn = DateTime.Now;
+
                 }
 
                 existingPres.TopicTitle = pres.title;
                 existingPres.TopicDescription = pres.description;
-                existingPres.CreatedOn = DateTime.Now;
                 existingPres.IsPrimaryPres = existingSpeaker.Presentations.Count() == 1;
                 existingPres.MainSpeaker = existingSpeaker;
                 existingPres.Status = Status.Accepted;

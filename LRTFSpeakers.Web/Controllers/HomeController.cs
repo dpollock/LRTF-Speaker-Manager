@@ -37,36 +37,15 @@ namespace LRTFSpeakers.Web.Controllers
 
         public ActionResult GetImages()
         {
-            var speakers = db.SpeakerDatas.ToList();
+            var speakers = db.Speakers.ToList();
 
-            WebClient webClient = new WebClient();
             foreach (var speaker in speakers)
             {
-                try
-                {
-                    var fileextension = "";
-                    if (speaker.Photo.EndsWith("png"))
-                        fileextension = "png";
-                    else if (speaker.Photo.EndsWith("jpg"))
-                        fileextension = "jpg";
-                    else if (speaker.Photo.EndsWith("jpeg"))
-                        fileextension = "jpeg";
+                var fileextension = "jpg";
 
-                    if (!string.IsNullOrWhiteSpace(fileextension))
-                    {
-                        string calcFilename = speaker.LastName + "-" + speaker.FirstName + "." + fileextension;
-                       
-                        webClient.DownloadFile(speaker.Photo, Server.MapPath("~/App_Data/Images/" + calcFilename.ToLower()));
-                       // speaker.Photo =
-                        //   $"/public/img/speakers/{speaker.LastName}-{speaker.FirstName}.{fileextension}".ToLower();
-                    }
-                 
-                }
-                catch (Exception ex )
-                {
-                    //return Content(ex.Message);
-                }
+                string calcFilename = speaker.LastName + "-" + speaker.FirstName + "." + fileextension;
 
+                speaker.Photo = $"/public/img/speakers/{calcFilename}".ToLower();
 
             }
             db.SaveChanges();
@@ -77,7 +56,7 @@ namespace LRTFSpeakers.Web.Controllers
 
         public ActionResult GetEmails()
         {
-            var emails= db.Presentations.Where(x => x.Status == Status.Accepted || x.Status == Status.AwaitingAccepted)
+            var emails = db.Presentations.Where(x => x.Status == Status.Accepted || x.Status == Status.AwaitingAccepted)
                 .Select(x => x.MainSpeaker)
                 .ToList()
                 .Select(x => x.FullName + " &lt;" + x.Email + "&gt;");
@@ -97,7 +76,7 @@ namespace LRTFSpeakers.Web.Controllers
 
         public ActionResult GetPresentationStats(string groupby, bool? filter)
         {
-            var data = db.Presentations.Include("MainSpeaker").Where(x=>x.IsPrimaryPres).ToList();
+            var data = db.Presentations.Include("MainSpeaker").Where(x => x.IsPrimaryPres).ToList();
             IEnumerable<IGrouping<string, Presentation>> result = data.GroupBy(d => d.Status.ToString());
             switch (groupby)
             {
@@ -109,6 +88,9 @@ namespace LRTFSpeakers.Web.Controllers
                     break;
                 case "room":
                     result = data.GroupBy(d => d.Room);
+                    break;
+                case "day":
+                    result = data.GroupBy(d => d.Day.ToString());
                     break;
                 default:
                     result = data.GroupBy(d => d.Status.ToString());
@@ -214,11 +196,6 @@ namespace LRTFSpeakers.Web.Controllers
             return View(new List<SpeakerData>());
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
 
-            return View();
-        }
     }
 }
