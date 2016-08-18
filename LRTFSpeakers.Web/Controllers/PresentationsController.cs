@@ -195,11 +195,11 @@ namespace LRTFSpeakers.Web.Controllers
                     }
                     else
                     {
-                        existingSpeaker.Bio = pres.bio;
-                        existingSpeaker.Company = pres.organization;
-                        existingSpeaker.Twitter = pres.twitter;
-                        existingSpeaker.Website = pres.url;
-                        existingSpeaker.Notes = pres.notes;
+                        //existingSpeaker.Bio = pres.bio;
+                        //existingSpeaker.Company = pres.organization;
+                        //existingSpeaker.Twitter = pres.twitter;
+                        //existingSpeaker.Website = pres.url;
+                        //existingSpeaker.Notes = pres.notes; //don't want to override current notes.
                     }
                 }
 
@@ -209,14 +209,15 @@ namespace LRTFSpeakers.Web.Controllers
                     existingPres = new Presentation();
                     existingSpeaker.Presentations.Add(existingPres);
                     existingPres.CreatedOn = DateTime.Now;
+                    existingPres.TopicTitle = pres.title;
+                    existingPres.TopicDescription = pres.description;
+                    existingPres.IsPrimaryPres = existingSpeaker.Presentations.Count() == 1;
+                    existingPres.MainSpeaker = existingSpeaker;
+                    existingPres.Status = Status.Accepted;
 
                 }
 
-                existingPres.TopicTitle = pres.title;
-                existingPres.TopicDescription = pres.description;
-                existingPres.IsPrimaryPres = existingSpeaker.Presentations.Count() == 1;
-                existingPres.MainSpeaker = existingSpeaker;
-                existingPres.Status = Status.Accepted;
+                
 
             }
 

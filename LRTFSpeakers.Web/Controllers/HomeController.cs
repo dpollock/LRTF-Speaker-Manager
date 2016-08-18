@@ -134,7 +134,16 @@ namespace LRTFSpeakers.Web.Controllers
                 })
             });
 
-            return Content(JsonConvert.SerializeObject(result, Formatting.Indented), "json");
+            JsonSerializerSettings settings = new JsonSerializerSettings
+            {
+                //StringEscapeHandling = StringEscapeHandling.EscapeHtml,
+                
+            };
+
+
+            var output = JsonConvert.SerializeObject(result, Formatting.Indented, settings);
+            output = output.Replace(@"\r\n", @"<br/>");
+            return Content(output);
 
 
         }
