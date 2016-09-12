@@ -61,6 +61,7 @@ namespace LRTFSpeakers.Web.Models
         public Status Status { get; set; }
 
         public bool IsPrimaryPres { get; set; }
+        public bool IsTimeSlotLocked { get; set; }
     }
 
     public enum Status

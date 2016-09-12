@@ -48,7 +48,7 @@ namespace LRTFSpeakers.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,EntryID,Track,TopicTitle,TopicDescription,CreatedOn,Room,SessionNumber,Status,IsPrimaryPres")] Presentation presentation)
+        public ActionResult Create([Bind(Include = "Id,EntryID,Track,TopicTitle,TopicDescription,CreatedOn,Room,SessionNumber,Status,IsPrimaryPres,IsTimeSlotLocked,Day")] Presentation presentation)
         {
             if (ModelState.IsValid)
             {
@@ -80,13 +80,13 @@ namespace LRTFSpeakers.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,EntryID,Track,TopicTitle,TopicDescription,CreatedOn,Room,SessionNumber,Status,IsPrimaryPres")] Presentation presentation)
+        public ActionResult Edit([Bind(Include = "Id,EntryID,Track,TopicTitle,TopicDescription,CreatedOn,Room,SessionNumber,Status,IsPrimaryPres,IsTimeSlotLocked,Day")] Presentation presentation)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(presentation).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Scheduling");
             }
             return View(presentation);
         }

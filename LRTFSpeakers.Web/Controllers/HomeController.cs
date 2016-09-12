@@ -16,6 +16,7 @@ namespace LRTFSpeakers.Web.Controllers
 {
     public class HomeController : Controller
     {
+        SpeakerContext db = new SpeakerContext();
         public ActionResult Test()
         {
             return View();
@@ -28,7 +29,7 @@ namespace LRTFSpeakers.Web.Controllers
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-        SpeakerContext db = new SpeakerContext();
+       
         public ActionResult Index()
         {
             var data = db.SpeakerDatas.ToList();

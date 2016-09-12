@@ -1,0 +1,138 @@
+﻿@using LRTFSpeakers.Web.Models
+@model IEnumerable<LRTFSpeakers.Web.Models.Presentation>
+
+@{
+    ViewBag.Title = "Scheduling";
+}
+
+<h2>Scheduling</h2>
+
+
+<div class="row">
+    <div class="col-md-6">
+        <h3>Thursday</h3>
+    </div>
+    <div class="col-md-6">
+        <h3>Friday</h3>
+    </div>
+
+
+</div>
+
+<div class="row">
+    <div class="col-md-2">
+        <h4>Room 1</h4>
+    </div>
+    <div class="col-md-2">
+        <h4>Room 2</h4>
+    </div>
+    <div class="col-md-2">
+        <h4>Room 3</h4>
+    </div>
+    <div class="col-md-2">
+        <h4>Room 1</h4>
+    </div>
+    <div class="col-md-2">
+        <h4>Room 2</h4>
+    </div>
+    <div class="col-md-2">
+        <h4>Room 3</h4>
+    </div>
+
+
+
+</div>
+@for (int session = 1; session <= 6; session++)
+{
+    <div class="row row-striped top-buffer">
+        
+        @for (int day = 1; day <= 2; day++)
+        {
+            for (int room = 1; room <= 3; room++)
+            {
+                var talks = Model.Where(x => x.Day == day && x.SessionNumber == session && x.Room == room.ToString());
+
+                if (!talks.Any())
+                {
+                    talks = new List<Presentation>()
+                    {
+                        new Presentation()
+                        {
+                            TopicTitle = "NOT SET",
+                            MainSpeaker = new Speaker() {FirstName = "NOT", LastName = "SET"}
+                        }
+                    };
+                }
+
+                <div class="talk-slot col-md-2 @(talks.FirstOrDefault().IsTimeSlotLocked ? "time-slot-locked" : "")">
+                    @foreach (var t in talks)
+                    {
+                        <span>@Html.ActionLink(t.MainSpeaker.FullName, "Edit", "Presentations", new {id = t.Id}, null) - @t.TopicTitle</span>
+                    }
+                </div>
+            }
+
+        }
+
+
+
+    </div>
+}
+
+<br />
+<br />
+<table class="table table-condensed table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Track)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Day)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Room)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SessionNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TopicTitle)
+        </th>
+
+        <th>Speaker</th>
+        <th>Notes</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Track)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Day)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Room)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SessionNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TopicTitle)
+            </td>
+            <td>
+                @item.MainSpeaker.FullName
+            </td>
+            <td>
+                @item.MainSpeaker.Notes
+            </td>
+
+
+            <td></td>
+        </tr>
+    }
+
+</table>
