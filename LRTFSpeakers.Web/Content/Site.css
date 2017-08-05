@@ -23,10 +23,10 @@ textarea {
     /*max-width: 280px;*/
 }
 
-body {
+/*body {
     font-family: Verdana;
     font-size: 11px;
-}
+}*/
 
 h2 {
     margin-bottom: 0;
@@ -38,10 +38,10 @@ small {
     font-size: 9px;
 }
 
-    small,
-    small a {
-        color: #666;
-    }
+small,
+small a {
+    color: #666;
+}
 
 a {
     color: #000;
@@ -71,10 +71,10 @@ textarea {
     font-size: 11px;
 }
 
-    textarea:focus {
-        color: black;
-        border: 2px solid black;
-    }
+textarea:focus {
+    color: black;
+    border: 2px solid black;
+}
 
 .wysihtml5-command-active {
     font-weight: bold;

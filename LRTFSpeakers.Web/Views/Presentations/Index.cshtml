@@ -9,19 +9,21 @@
 <p>
     <div class="dropdown">
         <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            Dropdown
+            Presentation Actions
             <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
             <li>@Html.ActionLink("Generate Speaker.json", "GetSpeakerJson", "Home")</li>
             <li>@Html.ActionLink("Speaker Emails", "GetEmails", "Home")</li>
             <li>@Html.ActionLink("Speaker Stats", "GetPresStat", "Home")</li>
+            <li>@Html.ActionLink("Update Speaker Photos", "GetImages", "Home")</li>
             <li role="separator" class="divider"></li>
             <li>@Html.ActionLink("Upload JSON", "Upload")</li>
         </ul>
     </div>
 </p>
 <table class="table table-striped">
+    <thead>
     <tr>
         <th>
             Status
@@ -59,84 +61,90 @@
 
         <th></th>
     </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Status
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu changeStatus" aria-labelledby="dropdownMenu1">
+                            <li><a data-id="@item.Id" data-status="0" href="#">Submitted</a></li>
+                            <li><a data-id="@item.Id" data-status="1" href="#">Accepted</a></li>
+                            <li><a data-id="@item.Id" data-status="2" href="#">Rejected</a></li>
+                            <li><a data-id="@item.Id" data-status="3" href="#">Backup</a></li>
+                            <li><a data-id="@item.Id" data-status="4" href="#">Awaiting Acceptance</a></li>
+                            <li><a data-id="@item.Id" data-status="5" href="#">Speaker Declined</a></li>
+                        </ul>
+                    </div>
+                </td>
+                <td>
+                    <span id="@item.Id">@item.Status</span>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    <img src="http://www.lrtechfest.com/@item.MainSpeaker.Photo" class="thumbnail" alt="" />
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        Status
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu changeStatus" aria-labelledby="dropdownMenu1">
-                        <li><a data-id="@item.Id" data-status="0" href="#">Submitted</a></li>
-                        <li><a data-id="@item.Id" data-status="1" href="#">Accepted</a></li>
-                        <li><a data-id="@item.Id" data-status="2" href="#">Rejected</a></li>
-                        <li><a data-id="@item.Id" data-status="3" href="#">Backup</a></li>
-                        <li><a data-id="@item.Id" data-status="4" href="#">Awaiting Acceptance</a></li>
-                        <li><a data-id="@item.Id" data-status="5" href="#">Speaker Declined</a></li>
-                    </ul>
-                </div>
-            </td>
-            <td>
-                <span id="@item.Id">@item.Status</span>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                <img src="http://www.lrtechfest.com/@item.MainSpeaker.Photo" class="thumbnail" alt="" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MainSpeaker.FullName)
+                </td>
 
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MainSpeaker.FullName)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Track)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TopicTitle)
+                </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Track)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TopicTitle)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedOn)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Day)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Room)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SessionNumber)
+                </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Day)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Room)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SessionNumber)
-            </td>
-
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
-        </tr>
-    }
-
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 
 @section scripts{
-
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.15/datatables.min.js"></script> 
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs/jqc-1.12.4/dt-1.10.15/datatables.min.js"></script>
     <script>
+        $(document).ready(function() {
+            $('.table').DataTable();
+        } );
+
         $('.changeStatus > li > a').click(function () {
             event.preventDefault();
             var that = $(this);
             $.ajax({
-                method: "POST",
-                url: "@Url.Action("UpdateStatus")",
-                data: { id: that.data('id'), statusId: that.data('status') }
-            })
-              .done(function (msg) {
-                  $('#' + that.data('id')).html(msg);
-              });
+                    method: "POST",
+                    url: "@Url.Action("UpdateStatus")",
+                    data: { id: that.data('id'), statusId: that.data('status') }
+                })
+                .done(function (msg) {
+                    $('#' + that.data('id')).html(msg);
+                });
 
         });
 

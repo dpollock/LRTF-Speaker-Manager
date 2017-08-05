@@ -10,9 +10,10 @@ using Humanizer;
 
 namespace LRTFSpeakers.Web.Controllers
 {
+    [Authorize]
     public class SchedulingController : Controller
     {
-        SpeakerContext db = new SpeakerContext();
+        ApplicationDbContext db = new ApplicationDbContext();
         // GET: Scheduling
         public ActionResult Index()
         {

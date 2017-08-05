@@ -5,14 +5,14 @@ namespace LRTFSpeakers.Web.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<LRTFSpeakers.Web.Models.SpeakerContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<LRTFSpeakers.Web.Models.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(LRTFSpeakers.Web.Models.SpeakerContext context)
+        protected override void Seed(LRTFSpeakers.Web.Models.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

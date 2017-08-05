@@ -14,9 +14,10 @@ using Newtonsoft.Json;
 
 namespace LRTFSpeakers.Web.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
-        SpeakerContext db = new SpeakerContext();
+        ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Test()
         {
             return View();
@@ -29,11 +30,13 @@ namespace LRTFSpeakers.Web.Controllers
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-       
+
         public ActionResult Index()
         {
-            var data = db.SpeakerDatas.ToList();
-            return View(data);
+
+            return RedirectToAction("Index", "Presentations");
+            //var data = db.SpeakerDatas.ToList();
+            //return View(data);
         }
 
         public ActionResult GetImages()
@@ -51,7 +54,7 @@ namespace LRTFSpeakers.Web.Controllers
             }
             db.SaveChanges();
 
-            return Content("ok");
+            return RedirectToAction("Index", "Presentations");
 
         }
 
@@ -148,64 +151,6 @@ namespace LRTFSpeakers.Web.Controllers
 
 
         }
-        public ActionResult About()
-        {
-
-            var data = db.Speakers.ToList();
-            foreach (var speaker in data)
-            {
-                speaker.FirstName = speaker.FirstName.Pascalize();
-                speaker.LastName = speaker.LastName.Pascalize();
-                speaker.Photo = $"/public/img/speakers/{speaker.LastName}-{speaker.FirstName}.png".ToLower();
-            }
-            db.SaveChanges();
-            //var speakerNames = data.GroupBy(g=> new { g.FirstName, g.LastName});
-
-            //foreach (var n in speakerNames)
-            //{
-            //    var speaker = n.First();
-            //    var newSpeaker = new Speaker
-            //    {
-            //        Address = speaker.Address,
-            //        Address2 = speaker.Address2,
-            //        Bio = speaker.Bio,
-            //        City = speaker.City,
-            //        Email = speaker.Email,
-            //        FirstName = speaker.FirstName,
-            //        LastName = speaker.LastName,
-            //        Photo = speaker.Photo,
-            //        Phone = speaker.Phone,
-            //        ShirtSize = speaker.ShirtSize,
-            //        State = speaker.State,
-            //        Website = speaker.Website,
-            //        Zip = speaker.Zip,
-            //        Presentations = n.Select(pres => new Presentation
-            //        {
-            //            CreatedOn = pres.CreatedOn,
-            //            EntryID = pres.EntryID,
-            //            TopicDescription = pres.TopicDescription,
-            //            TopicTitle = pres.TopicTitle,
-            //            Track = pres.Track
-            //        }).ToList()
-            //    };
-
-
-
-            //    db.Speakers.Add(newSpeaker);
-            //}
-
-            //db.SaveChanges();
-            var excel = new ExcelQueryFactory(@"c:\ironyard\lrtf2015.csv");
-            var speakerdata = from c in excel.Worksheet<SpeakerData>()
-                              select c;
-
-
-            //db.SpeakerDatas.AddRange(speakerdata);
-            //db.SaveChanges();
-
-            return View(new List<SpeakerData>());
-        }
-
 
     }
 }

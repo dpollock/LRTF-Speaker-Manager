@@ -10,9 +10,10 @@ using LRTFSpeakers.Web.Models;
 
 namespace LRTFSpeakers.Web.Controllers
 {
+    [Authorize]
     public class SpeakersController : Controller
     {
-        private SpeakerContext db = new SpeakerContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Speakers
         public ActionResult Index()

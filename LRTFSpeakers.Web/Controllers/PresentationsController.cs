@@ -12,9 +12,10 @@ using Newtonsoft.Json.Linq;
 
 namespace LRTFSpeakers.Web.Controllers
 {
+    [Authorize]
     public class PresentationsController : Controller
     {
-        private SpeakerContext db = new SpeakerContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Presentations
         public ActionResult Index()
@@ -86,7 +87,7 @@ namespace LRTFSpeakers.Web.Controllers
             {
                 db.Entry(presentation).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index","Scheduling");
+                return RedirectToAction("Index", "Scheduling");
             }
             return View(presentation);
         }
@@ -152,7 +153,7 @@ namespace LRTFSpeakers.Web.Controllers
             var convertedData = JsonConvert.DeserializeObject<List<PaperCallIOFormat>>(jsonfile);
             foreach (var pres in convertedData)
             {
-                var existingSpeaker = db.Speakers.Include(x=>x.Presentations).FirstOrDefault(x => x.Email == pres.email);
+                var existingSpeaker = db.Speakers.Include(x => x.Presentations).FirstOrDefault(x => x.Email == pres.email);
                 if (existingSpeaker == null)
                 {
                     existingSpeaker = new Speaker
@@ -207,17 +208,44 @@ namespace LRTFSpeakers.Web.Controllers
                 if (existingPres == null)
                 {
                     existingPres = new Presentation();
-                    existingSpeaker.Presentations.Add(existingPres);
-                    existingPres.CreatedOn = DateTime.Now;
-                    existingPres.TopicTitle = pres.title;
                     existingPres.TopicDescription = pres.description;
-                    existingPres.IsPrimaryPres = existingSpeaker.Presentations.Count() == 1;
-                    existingPres.MainSpeaker = existingSpeaker;
-                    existingPres.Status = Status.Accepted;
+                    existingSpeaker.Presentations.Add(existingPres);
 
                 }
 
-                
+                existingPres.CreatedOn = pres.created_at;
+                existingPres.TopicTitle = pres.title;
+               
+                existingPres.IsPrimaryPres = existingSpeaker.Presentations.Count() == 1;
+                existingPres.MainSpeaker = existingSpeaker;
+
+                switch (pres.state)
+                {
+                    case "accepted":
+                        if (pres.confirmed)
+                        {
+                            if (existingPres.Status != Status.Backup) //meaning they are already accepted and marked as a backup. don't change the status.
+                                existingPres.Status = Status.Accepted;
+                        }
+                        else
+                        {
+                            existingPres.Status = Status.AwaitingAccepted;
+                        }
+
+                        break;
+                    case "submitted":
+                        existingPres.Status = Status.Submitted;
+                        break;
+                    case "rejected":
+                        existingPres.Status = Status.Rejected;
+                        break;
+                    case "declined":
+                        existingPres.Status = Status.SpeakerDeclined;
+                        break;
+
+                }
+
+
 
             }
 
