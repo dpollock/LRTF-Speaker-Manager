@@ -167,6 +167,7 @@ namespace LRTFSpeakers.Web.Controllers
                         Notes = pres.notes,
                         Presentations = new List<Presentation>()
                     };
+                   
 
                     var name = pres.name.Split(' ');
                     if (name.Length == 2)
@@ -187,6 +188,7 @@ namespace LRTFSpeakers.Web.Controllers
                     }
 
                     db.Speakers.Add(existingSpeaker);
+                    db.SaveChanges();
                 }
                 else
                 {
