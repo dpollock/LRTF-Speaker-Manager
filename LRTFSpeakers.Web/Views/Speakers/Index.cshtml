@@ -1,137 +1,97 @@
-﻿@model IEnumerable<LRTFSpeakers.Web.Models.Speaker>
+﻿@using Humanizer
+@model IEnumerable<LRTFSpeakers.Web.Models.SpeakerIndexVM>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Speakers</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th></th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LastName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Photo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Phone)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Address2)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.City)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.State)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Zip)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Bio)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Website)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ShirtSize)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AttendingSpeakerDinner)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Twitter)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Company)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.LinkedIn)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Notes)
-        </th>
+<table class="table table-condensed table-hover table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhotoUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CityState)
+            </th>
 
-    </tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LRTFNotes)
+            </th>
+            <th nowrap>
+                Shirt / Dinner
+            </th>
+            <th nowrap>
+                E / W / H
+            </th>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Photo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Phone)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Address2)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.City)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.State)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Zip)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Bio)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Website)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ShirtSize)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AttendingSpeakerDinner)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Twitter)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Company)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LinkedIn)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Notes)
-        </td>
+            <th>
+                Presentations
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                    @if (!string.IsNullOrWhiteSpace(item.Twitter))
+                    {
+                        <a href="https://www.twitter.com/@item.Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                    }
 
-    </tr>
-}
+                    @if (!string.IsNullOrWhiteSpace(item.Website))
+                {
+                        <a href="@item.Website"><i class="fa fa-globe" aria-hidden="true"></i></a>
+                    }
+                </td>
+                <td>
+                    <img src="http://www.lrtechfest.com/@item.PhotoUrl" class="thumbnail" alt="" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CityState)
+                </td>
 
+                <td>
+                    @item.LRTFNotes.Truncate(100)
+                </td>
+                <td nowrap="">
+                    @(string.IsNullOrWhiteSpace(item.ShirtSize) ? "??" : item.ShirtSize) @Html.DisplayFor(modelItem => item.AttendingSpeakerDinner)
+                </td>
+                <td nowrap="">
+                    @Html.DisplayFor(modelItem => item.HasInitialEmail) @Html.DisplayFor(modelItem => item.HasConfirmedWebsiteDetails) @Html.DisplayFor(modelItem => item.HasHotelHandled)
+                </td>
+                <td>
+                    @item.TotalAccepted / @item.TotalPresentations
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new {id = item.SpeakerId}) |
+                    @Html.ActionLink("Details", "Details", new { id = item.SpeakerId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.SpeakerId })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+
+@section scripts{
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.15/datatables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs/jqc-1.12.4/dt-1.10.15/datatables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.table').DataTable();
+        });
+
+    </script>
+
+}

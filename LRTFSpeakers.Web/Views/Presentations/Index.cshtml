@@ -131,7 +131,11 @@
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs/jqc-1.12.4/dt-1.10.15/datatables.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('.table').DataTable();
+            $('.table').DataTable({
+                "columnDefs": [
+                    { "searchable": false, "targets": 0, "sortable": false}
+                ]
+            });
         } );
 
         $('.changeStatus > li > a').click(function () {

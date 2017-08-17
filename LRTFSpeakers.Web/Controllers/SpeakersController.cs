@@ -18,7 +18,27 @@ namespace LRTFSpeakers.Web.Controllers
         // GET: Speakers
         public ActionResult Index()
         {
-            return View(db.Speakers.ToList());
+            var model = db.Speakers.Select(s => new SpeakerIndexVM
+            {
+                SpeakerId = s.Id,
+                AttendingSpeakerDinner = s.AttendingSpeakerDinner,
+                CityState = s.City + " " + s.State,
+                FullName = s.FirstName + " " + s.LastName,
+                HasConfirmedWebsiteDetails = s.HasConfirmedWebsiteDetails,
+                HasHotelHandled = s.HasHotelHandled,
+                HasInitialEmail = s.HasInitialEmail,
+                Notes = s.Notes,
+                PhotoUrl = s.Photo,
+                ShirtSize = s.ShirtSize,
+                TotalAccepted = s.Presentations.Count(p => p.Status == Status.Accepted || p.Status == Status.AwaitingAccepted),
+                TotalPresentations = s.Presentations.Count,
+                Twitter = s.Twitter,
+                Website = s.Website,
+                LRTFNotes = s.LRTFNotes,
+
+            }).ToList();
+
+            return View(model);
         }
 
         // GET: Speakers/Details/5
@@ -47,7 +67,7 @@ namespace LRTFSpeakers.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,Photo,Email,Phone,Address,Address2,City,State,Zip,Bio,Website,ShirtSize,AttendingSpeakerDinner,Twitter,Company,LinkedIn,Notes")] Speaker speaker)
+        public ActionResult Create(Speaker speaker)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +99,7 @@ namespace LRTFSpeakers.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,Photo,Email,Phone,Address,Address2,City,State,Zip,Bio,Website,ShirtSize,AttendingSpeakerDinner,Twitter,Company,LinkedIn,Notes")] Speaker speaker)
+        public ActionResult Edit(Speaker speaker)
         {
             if (ModelState.IsValid)
             {

@@ -209,6 +209,7 @@
     <Compile Include="Controllers\PresentationsController.cs" />
     <Compile Include="Controllers\SchedulingController.cs" />
     <Compile Include="Controllers\SpeakersController.cs" />
+    <Compile Include="Controllers\StringExt.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -216,10 +217,19 @@
     <Compile Include="Migrations\201708051658333_InitialCreation.Designer.cs">
       <DependentUpon>201708051658333_InitialCreation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708150006042_SpeakerCheckListItems.cs" />
+    <Compile Include="Migrations\201708150006042_SpeakerCheckListItems.Designer.cs">
+      <DependentUpon>201708150006042_SpeakerCheckListItems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708170230088_LRTFNotes.cs" />
+    <Compile Include="Migrations\201708170230088_LRTFNotes.Designer.cs">
+      <DependentUpon>201708170230088_LRTFNotes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\SpeakerIndexVM.cs" />
     <Compile Include="Models\SpeakerModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -316,6 +326,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201708051658333_InitialCreation.resx">
       <DependentUpon>201708051658333_InitialCreation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708150006042_SpeakerCheckListItems.resx">
+      <DependentUpon>201708150006042_SpeakerCheckListItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708170230088_LRTFNotes.resx">
+      <DependentUpon>201708170230088_LRTFNotes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

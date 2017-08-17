@@ -28,6 +28,10 @@ namespace LRTFSpeakers.Web.Models
         public string ShirtSize { get; set; }
         public bool AttendingSpeakerDinner { get; set; }
 
+        public bool HasInitialEmail { get; set; }
+        public bool HasHotelHandled { get; set; }
+        public bool HasConfirmedWebsiteDetails { get; set; }
+        
         public virtual List<Presentation> Presentations { get; set; }
         public string Twitter { get; set; }
         public string Company { get; set; }
@@ -39,6 +43,9 @@ namespace LRTFSpeakers.Web.Models
 
         [DataType(DataType.MultilineText)]
         public string Notes { get; set; }
+
+        [DataType(DataType.MultilineText)]
+        public string LRTFNotes { get; set; }
     }
 
     public class Presentation

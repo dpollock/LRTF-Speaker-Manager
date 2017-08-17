@@ -60,7 +60,7 @@ namespace LRTFSpeakers.Web.Controllers
 
         public ActionResult GetEmails()
         {
-            var emails = db.Presentations.Where(x => x.Status == Status.Accepted || x.Status == Status.AwaitingAccepted)
+            var emails = db.Presentations.Where(x => x.Status == Status.Accepted)
                 .Select(x => x.MainSpeaker)
                 .ToList()
                 .Select(x => x.FullName + " &lt;" + x.Email + "&gt;");
