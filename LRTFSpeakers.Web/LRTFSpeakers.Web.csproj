@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -225,6 +226,10 @@
     <Compile Include="Migrations\201708170230088_LRTFNotes.Designer.cs">
       <DependentUpon>201708170230088_LRTFNotes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710081518064_SlidesLink.cs" />
+    <Compile Include="Migrations\201710081518064_SlidesLink.Designer.cs">
+      <DependentUpon>201710081518064_SlidesLink.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -332,6 +337,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708170230088_LRTFNotes.resx">
       <DependentUpon>201708170230088_LRTFNotes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710081518064_SlidesLink.resx">
+      <DependentUpon>201710081518064_SlidesLink.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

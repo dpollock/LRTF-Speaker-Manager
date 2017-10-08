@@ -17,7 +17,7 @@ namespace LRTFSpeakers.Web.Controllers
         // GET: Scheduling
         public ActionResult Index()
         {
-            var pres = db.Presentations.AsNoTracking().Include(p => p.MainSpeaker).Where(x => x.Status == Status.Accepted).ToList();
+            var pres = db.Presentations.AsNoTracking().Include(p => p.MainSpeaker).Where(x => x.Status == Status.Accepted || x.Status == Status.PlaceHolder).ToList();
             foreach (var presentation in pres)
             {
                 presentation.TopicTitle = presentation.TopicTitle.Truncate(50);

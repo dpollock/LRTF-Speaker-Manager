@@ -84,6 +84,10 @@ textarea:focus {
     background-color: lightgreen;
 }
 
+.time-slot-placeholder {
+    background-color: gold;
+}
+
 
 .row-striped:nth-of-type(even) {
     background-color: #efefef;

@@ -64,7 +64,7 @@
                     };
                 }
 
-                <div class="talk-slot col-md-2 @(talks.FirstOrDefault().IsTimeSlotLocked ? "time-slot-locked" : "")">
+                <div class="talk-slot col-md-2 @(talks.FirstOrDefault().IsTimeSlotLocked ? "time-slot-locked" : "") @(talks.FirstOrDefault().Status == Status.PlaceHolder ? "time-slot-placeholder" : "")">
                     @foreach (var t in talks)
                     {
                         <span>@Html.ActionLink(t.MainSpeaker.FullName, "Edit", "Presentations", new {id = t.Id}, null) - @t.TopicTitle</span>

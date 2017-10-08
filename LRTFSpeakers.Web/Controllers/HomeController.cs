@@ -134,7 +134,8 @@ namespace LRTFSpeakers.Web.Controllers
                     p.Room,
                     p.SessionNumber,
                     Topic = p.TopicTitle,
-                    Description = p.TopicDescription
+                    Description = p.TopicDescription,
+                    SlidesLink = p.SlidesURL,
                 })
             });
 

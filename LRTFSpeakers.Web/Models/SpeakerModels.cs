@@ -71,6 +71,7 @@ namespace LRTFSpeakers.Web.Models
 
         public bool IsPrimaryPres { get; set; }
         public bool IsTimeSlotLocked { get; set; }
+        public string SlidesURL { get; set; }
     }
 
     public enum Status
@@ -80,7 +81,8 @@ namespace LRTFSpeakers.Web.Models
         Rejected,
         Backup,
         AwaitingAccepted,
-        SpeakerDeclined
+        SpeakerDeclined,
+        PlaceHolder
     }
 
     public class SpeakerData
