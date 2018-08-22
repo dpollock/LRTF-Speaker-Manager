@@ -47,9 +47,9 @@ namespace LRTFSpeakers.Web.Controllers
             {
                 var fileextension = "jpg";
 
-                string calcFilename = speaker.LastName + "-" + speaker.FirstName + "." + fileextension;
+                string calcFilename = (speaker.LastName + "-" + speaker.FirstName + "." + fileextension).Replace(" ","-");
 
-                speaker.Photo = $"/public/img/speakers/{calcFilename}".ToLower();
+                speaker.Photo = $"{calcFilename}".ToLower();
 
             }
             db.SaveChanges();
