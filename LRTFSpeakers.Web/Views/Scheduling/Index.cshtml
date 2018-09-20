@@ -54,7 +54,7 @@
         
         @for (int day = 1; day <= 2; day++)
         {
-            for (int room = 1; room <= 3; room++)
+            for (int room = 1; room <= 4; room++)
             {
                 var talks = Model.Where(x => x.Day == day && x.SessionNumber == session && x.Room == room.ToString());
 
